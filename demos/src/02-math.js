@@ -3,15 +3,22 @@ function sum(a, b) {
 }
 
 function multiply(a, b) {
-  return a + b
+  return a * b
 }
 
 function divide(a, b) {
-  return a + b
+  if (b === 0) return null
+
+  return a / b
+}
+
+function average(a, b) {
+  return sum(a, b) / 2
 }
 
 module.exports = {
-  sum,
+  average,
+  divide,
   multiply,
-  divide
+  sum,
 }
