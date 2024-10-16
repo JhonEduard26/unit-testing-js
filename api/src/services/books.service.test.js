@@ -1,15 +1,5 @@
+const { generateManyBooks } = require('../data/books.fake');
 const BooksService = require('./books.service');
-
-const dataFake = [
-  {
-    _id: '5f5b986f6f6b9854f4a4c4f4',
-    title: 'The Pragmatic Programmer',
-  },
-  {
-    _id: '5f5b986f6f6b9854f4a4c4f5',
-    title: 'Clean Code',
-  },
-];
 
 const mockGetAll = jest.fn();
 // const mongoLibStub = {
@@ -32,25 +22,24 @@ describe('test for BooksService', () => {
 
   describe('test for getBooks', () => {
     it('should return an array of books', async () => {
-      mockGetAll.mockResolvedValue(dataFake);
+      const fakeBooks = generateManyBooks();
+      mockGetAll.mockResolvedValue(fakeBooks);
 
       const books = await service.getBooks({});
       console.log(books);
-      expect(books.length).toBe(2);
+      expect(books.length).toBe(fakeBooks.length);
       expect(mockGetAll).toHaveBeenCalled();
       expect(mockGetAll).toHaveBeenCalledTimes(1);
       expect(mockGetAll).toHaveBeenCalledWith('books', {});
     });
 
     it('should return one book', async () => {
-      mockGetAll.mockResolvedValue([{
-        _id: '6f5b986f6f6b9854f4a4c4f4',
-        title: 'JavaScript The Good Parts',
-      }]);
+      const fakeBooks = generateManyBooks(4);
+      mockGetAll.mockResolvedValue(fakeBooks);
 
       const books = await service.getBooks({});
       console.log(books);
-      expect(books[0].title).toBe('JavaScript The Good Parts');
+      expect(books[0].name).toBe(fakeBooks[0].name);
       expect(mockGetAll).toHaveBeenCalled();
       expect(mockGetAll).toHaveBeenCalledTimes(1);
       expect(mockGetAll).toHaveBeenCalledWith('books', {});
